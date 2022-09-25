@@ -1,0 +1,16 @@
+- name: Install alternatives tools in rust
+  cargo:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - bat
+    - exa
+    - procs
+    - du-dust
+    - tokei
+    - ytop
+    - tealdeer
+    - grex
+    - rmesg
+    - zoxide
+    - delta

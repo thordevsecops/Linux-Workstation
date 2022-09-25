@@ -1,0 +1,246 @@
+---
+- name: Preparing Workstation
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Installing Linux Apps
+      become: true
+      apt:
+        name: '{{ item }}'
+        install_recommends: yes
+        state: present
+      loop:
+          - build-essential
+          - default-jdk
+          - libssl-dev
+          - exuberant-ctags
+          - ncurses-term
+          - ack-grep
+          - silversearcher-ag
+          - fontconfig
+          - imagemagick
+          - libmagickwand-dev
+          - software-properties-common
+          - git
+          - neovim
+          - curl
+          - zsh
+          - neofetch
+          - fonts-hack
+          - tilix
+          - gnome-tweak-tool
+          - postgresql-12
+          - postgresql-contrib
+          - redis-server
+          - libhiredis-dev
+          - memcached
+          - libmemcached-dev                   
+          - autoconf
+          - m4
+          - libncurses5-dev
+          - libwxgtk3.0-gtk3-dev
+          - libgl1-mesa-dev
+          - libglu1-mesa-dev
+          - libpng-dev
+          - libssh-dev
+          - unixodbc-dev
+          - xsltproc
+          - fop
+          - libxml2-utils
+          - libncurses-dev
+          - openjdk-11-jdk
+          - gawk
+          - rlwrap
+          - gcc
+          - g++
+          - cmake
+          - libjsoncpp-dev
+          - uuid-dev
+          - openssl
+          - libssl-dev
+          - zlib1g-dev
+          - clamav
+          - clamtk
+          - gufw
+          - apache2
+          - mysql-server
+          - php
+          - libapache2-mod-php
+          - php-mysql
+          - audacity
+          - blender
+          - clipit
+          - darktable
+          - inkscape
+          - gimp
+          - dia
+          - geany
+          - glade
+          - kdenlive
+          - openshot
+          - winetricks
+          - playonlinux
+          - preload
+          - jq
+          - mtr
+          - htop
+          - curl
+          - wget
+          - ncdu
+          - tree
+          - apt-transport-https
+          - ca-certificates
+          - gnupg
+          - python3-pip
+          - make
+          - bash-completion
+          - gnupg-agent
+          - flameshot
+          - fonts-hack
+          - tilix
+          - mlocate
+          - gnome-themes-extra
+          - gtk2-engines-murrine
+          - sassc
+                                                                               
+      ignore_errors: true
+    - name: Installing AWS CLI via pip3
+      become: true
+      pip:
+        name: awscli
+        executable: pip3
+
+    - block:
+      - name: Installing Terraform 0.12.31
+        become: true
+        unarchive:
+          src: 'https://releases.hashicorp.com/terraform/0.12.31/terraform_0.12.31_linux_amd64.zip'
+          dest: /usr/local/bin
+          remote_src: yes
+      - name: Renaming terraform12 binary
+        become: true
+        command: mv /usr/local/bin/terraform /usr/local/bin/terraform12
+      - name: Installing Terraform 0.13.7 
+        become: true
+        unarchive:
+          src: 'https://releases.hashicorp.com/terraform/0.13.7/terraform_0.13.7_linux_amd64.zip'
+          dest: /usr/local/bin
+          remote_src: yes
+      - name: Renaming terraform13 binary
+        become: true
+        command: mv /usr/local/bin/terraform /usr/local/bin/terraform13
+      - name: Installing Terraform 0.14.11
+        become: true
+        unarchive:
+          src: 'https://releases.hashicorp.com/terraform/0.14.11/terraform_0.14.11_linux_amd64.zip'
+          dest: /usr/local/bin
+          remote_src: yes
+      - name: Renaming terraform14 binary
+        become: true
+        command: mv /usr/local/bin/terraform /usr/local/bin/terraform14
+      - name: Installing Terraform 0.15.0
+        become: true
+        unarchive:
+          src: 'https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip'
+          dest: /usr/local/bin
+          remote_src: yes
+      - name: Renaming terraform15 binary
+        become: true
+        command: mv /usr/local/bin/terraform /usr/local/bin/terraform15
+      - name: Installing Terraform 1.0.4
+        become: true
+        unarchive:
+          src: 'https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip'
+          dest: /usr/local/bin
+          remote_src: yes
+      - name: Renaming terraform1 binary
+        become: true
+        command: mv /usr/local/bin/terraform /usr/local/bin/terraform1
+
+    - block:
+      - name: Installing Vault 1.8.1
+        become: true
+        unarchive:
+          src: 'https://releases.hashicorp.com/vault/1.8.1/vault_1.8.1_linux_amd64.zip'
+          dest: /usr/local/bin
+          remote_src: yes
+
+    - block:
+      - name: Installing gomplate 3.9.0
+        become: true
+        get_url:    
+          url: 'https://github.com/hairyhenderson/gomplate/releases/download/v3.9.0/gomplate_linux-amd64'
+          dest: /usr/local/bin/gomplate
+          mode: 755
+
+    - block:
+      - name: Installing Stern 1.11.0
+        become: true
+        get_url:    
+          url: 'https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64'
+          dest: /usr/local/bin/stern
+          mode: 755
+
+    - block:
+      - name: Install Google Cloud SDK Key
+        become: true
+        apt_key:
+          url: 'https://packages.cloud.google.com/apt/doc/apt-key.gpg'
+          state: present
+      - name: Install Google Cloud SDK Repository
+        become: true
+        apt_repository:
+          repo: 'deb [arch=amd64] https://packages.cloud.google.com/apt cloud-sdk main'
+          state: present
+          filename: google-cloud-sdk
+      - name: Install Google Cloud SDK
+        become: true
+        apt:
+          name: google-cloud-sdk         
+         
+    - block:
+      - name: Adding Longsleep/Golang Backports Repository
+        become: true
+        apt_repository:
+          repo: 'ppa:longsleep/golang-backports'
+      - name: Install Golang 
+        become: true
+        apt:
+          name: golang-go
+          
+# OPTIONAL:
+#  - PEEK - Lightweight Screen Recorder that can export as GIF
+#  - OBS-STUDIO - Screen Recorder and Casting Software 
+#  - Brave Browser - Secure web browser
+#  - Ulauncher - Application Launcher
+
+    - block:
+      - name: Adding Peek Repository
+        become: true
+        apt_repository:
+          repo: 'ppa:peek-developers/stable'
+      - name: Install Peek
+        become: true
+        apt:
+          name: peek
+
+    - block:
+      - name: Install obsproject Ubuntu Repo
+        become: true
+        apt_repository:
+          repo: 'ppa:obsproject/obs-studio'
+      - name: Install obs Studio
+        become: true
+        apt:
+          name: obs-studio
+
+    - block: 
+      - name: Adding Ulauncher Repository
+        become: true
+        apt_repository:
+          repo: 'ppa:agornostal/ulauncher'
+      - name: Install Ulauncher
+        become: true
+        apt:
+          name: ulauncher

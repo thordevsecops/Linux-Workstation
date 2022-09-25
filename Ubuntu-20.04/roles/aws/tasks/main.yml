@@ -1,0 +1,6 @@
+    - name: Installing AWS CLI via pip3
+      become: true
+      pip:
+        name: awscli
+        executable: pip3
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution_version == '22.04'

@@ -1,0 +1,17 @@
+    - name: Outgoing allow UFW
+      become: true
+      become_user: root
+      ufw:
+        state: enabled
+        direction: outgoing
+        policy: allow
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"        
+
+    - name: Incoming deny UFW
+      become: true
+      become_user: root
+      ufw:
+        state: enabled
+        direction: incoming
+        policy: deny
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"        

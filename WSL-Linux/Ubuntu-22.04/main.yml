@@ -1,0 +1,13 @@
+- name: Preparing Ubuntu 22 WSL2 Workstation
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Checking OS
+      debug: msg={{ansible_distribution}}-{{ansible_distribution_version}}     
+  roles:
+    - role: essentials
+    - role: aws
+    - role: terraform
+    - role: tools
+#    - role: cargo
+#  tags: [ubuntu22-wsl, never] 

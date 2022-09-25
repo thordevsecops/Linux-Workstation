@@ -1,0 +1,18 @@
+# Nessus Vulnerability applications and infra Scanner
+# Create by Thor Devops <Linkedin: www.linkedin.com/in/rodrigorachaus>
+
+version: '3.8'
+
+services:
+  nessus:
+    image: tenableofficial/nessus
+    restart: always
+    container_name: nessus
+    environment:
+      USERNAME: ${USERNAME}
+      PASSWORD: ${PASSWORD}
+      ACTIVATION_CODE: ${ACTIVATION_CODE}
+    ports:
+      - 8834:8834
+    volumes:
+    - /opt/nessus/etc/nessus/:/opt/nessus/etc/nessus/:rw

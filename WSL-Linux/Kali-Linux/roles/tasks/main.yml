@@ -1,0 +1,7 @@
+    - name: Installing Base Apps for Developer
+      become: true
+      apt:
+        name: '{{ item }}'
+        install_recommends: yes
+        state: present
+      loop:

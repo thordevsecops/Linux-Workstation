@@ -1,0 +1,30 @@
+- name: set default shell for non root user
+  become: yes
+  user:
+    name: ${user.normal}
+    shell: /bin/zsh
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"    
+   
+
+- name: Install oh-my-zsh for non root user
+  become: yes
+  user:
+    name: ${user.normal}
+    shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"    
+
+
+- name: set default shell for root user
+  become: yes
+  user:
+    name: root
+    shell: /bin/zsh
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"    
+   
+
+- name: Install oh-my-zsh for root user
+  become: yes
+  user:
+    name: root
+    shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"    

@@ -1,0 +1,38 @@
+# Configurações do PowerShell
+# Importar os temas do oh-my-posh e utilizar o Powerlevel10K
+Import-Module posh-git
+Import-Module oh-my-posh
+Set-PoshPrompt -Theme  ~/pwsh10k.omp.json
+
+# Autocomplete, keybinds e histórico de comandos
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadlineOption -HistorySearchCursorMovesToEnd
+
+# Autosugestões do PSReadline
+Set-PSReadlineOption -ShowToolTips
+Set-PSReadlineOption -PredictionSource History
+
+# Terminal-Icons
+Import-Module Terminal-Icons
+
+# Fzf
+Import-Module PSFzf
+Set-PsFzfOption -PSReadLineChordProvider 'Ctrl+f' -PSReadLineChordReverseHistory 'Ctrl+r'
+
+# Alias (Optional)
+Set-Alias vim nvim
+Set-Alias g git
+Set-Alias ll ls
+Set-Alias grep findstr
+Set-Alias tig 'C:\Program Files\Git\usr\bin\tig.exe'
+Set-Alias less 'C:\Program Files\Git\usr\bin\less.exe'
+
+# Ultilities (Optional)
+function which ($command) {
+    Get-Command -Name $command -ErrorAction SilentlyContinue |
+        Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+}
+
+clear

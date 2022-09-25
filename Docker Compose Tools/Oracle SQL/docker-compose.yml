@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  database:
+    image: gvenzl/oracle-xe:latest
+    restart: always
+    container_name: oracle-xe
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+    volumes:
+      - ${HOME}:/opt/oracle/oradata # create home directory to oracle database data.
+    ports:
+      - 1521:1521
+      - 8080:8080
+      - 5500:5500

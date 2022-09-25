@@ -1,0 +1,13 @@
+- name: Preparing Ubuntu 22 WSL2 Workstation
+  hosts: localhost
+  connection: local 
+  roles:
+    - essentials
+    - ufw
+    - zsh
+    - cargo
+    - aws
+    - terraform
+    - tools
+#    - ppa
+  tags: [ubuntu20, never] 
